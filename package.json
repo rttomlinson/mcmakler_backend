@@ -1,0 +1,25 @@
+{
+  "name": "mcmakler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run jasmine",
+    "start-dev": "./node_modules/.bin/nodemon server.js",
+    "jasmine": "./node_modules/jasmine/bin/jasmine.js",
+    "test:watch": "./node_modules/.bin/nodemon --exec npm run jasmine"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.6.0",
+    "nodemon": "^1.11.0",
+    "qs": "^6.5.0",
+    "request": "^2.81.0"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3"
+  }
+}
