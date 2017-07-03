@@ -16,9 +16,9 @@ module.exports = (mongoModels) => {
 
     router.get('/fastest', function(req, res) {
         NEO.findFastest()
-            .then((neos) => {
+            .then((neo) => {
                 res.json({
-                    "fastestNEO": neos[0]
+                    "fastestNEO": neo
                 });
 
             });

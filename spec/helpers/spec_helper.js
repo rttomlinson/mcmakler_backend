@@ -11,15 +11,13 @@ beforeAll((done) => {
     else {
         require('../../mongoConnect')()
         .then(() => {
-            return require('../../seeds/seeds')();
-        })
-        .then(() => {
             done();
         })
         .catch((e) => console.error(e.stack));
     }
 });
 
+//we are cleaning the database after each test
 afterEach((done) => {
     //clean after each test
     require('../../seeds/clean')()

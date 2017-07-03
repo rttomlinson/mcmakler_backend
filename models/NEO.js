@@ -31,6 +31,10 @@ NEOSchema.statics.findFastest = function findFastest() {
     return this.find().limit(1).
     sort({
         speed: -1
+    })
+    .then((neos) => {
+        //return just the first in the array
+        return neos[0];
     });
 };
 
