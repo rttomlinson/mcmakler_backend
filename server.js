@@ -7,18 +7,23 @@ require('dotenv');
 const NEO = require('./models').NEO;
 
 app.get('/neo/hazardous', function(req, res) {
-    NEO.find().where({
-            "isHazardous": true
-        })
+    NEO.findHazardous()
         .then((neos) => {
             res.json({
                 "potentiallyHazardousNEOs": neos
             });
-
         });
 });
 
+app.get('/neo/fastest', function(req, res) {
+    NEO.findFastest()
+        .then((neos) => {
+            res.json({
+                "fastestNEO": neos[0]
+            });
 
+        });
+});
 
 app.get('/', function(req, res) {
     res.json({
@@ -26,12 +31,7 @@ app.get('/', function(req, res) {
     });
 });
 
-
-
-
-
 const port = process.env.PORT || 8080;
-
 // If we're running this file directly
 // start up the server
 if (require.main === module) {

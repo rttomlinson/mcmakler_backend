@@ -21,6 +21,19 @@ const NEOSchema = new Schema({
     timestamps: true
 });
 
-const NEO = mongoose.model('NEO', NEOSchema);
+NEOSchema.statics.findHazardous = function findHazardous() {
+    return this.find().where({
+            "isHazardous": true
+        });
+};
 
+NEOSchema.statics.findFastest = function findFastest() {
+    return this.find().limit(1).
+    sort({
+            speed: -1
+        });
+};
+
+
+const NEO = mongoose.model('NEO', NEOSchema);
 module.exports = NEO;

@@ -13,8 +13,8 @@ describe("server api", function() {
         server = app.listen(8082, function() {
             console.log("server connected on 8082 for tests");
             done();
-        })
-    })
+        });
+    });
     
     //reseed the database before each new test
     beforeEach(function(done) {
@@ -55,12 +55,34 @@ describe("server api", function() {
         request.get(`${baseTestUrl}/neo/hazardous`, function(err, res, body) {
 
             const serverResponse = JSON.parse(body);
+            const potentiallyHazardousNEOs = serverResponse.potentiallyHazardousNEOs;
+            const firstNEO = potentiallyHazardousNEOs[0];
+            expect(Array.isArray(potentiallyHazardousNEOs)).toBe(true);
+            expect(firstNEO.date).toEqual(expectedResponse[0].date);
+            expect(firstNEO.reference).toEqual(expectedResponse[0].reference);
+            expect(firstNEO.name).toEqual(expectedResponse[0].name);
+            expect(firstNEO.speed).toEqual(expectedResponse[0].speed);
+            expect(firstNEO.isHazardous).toEqual(expectedResponse[0].isHazardous);
+            done();
+        });
+    });
+    it("returns response at /neo/fastest endpoint", function(done) {
+        const expectedResponse = {
+            date: "2017-06-01T00:00:00.000Z",
+            reference: '2418094',
+            name: '418094 (2007 WV4)',
+            speed: 83656.2560790809,
+            isHazardous: true 
+        };
+        request.get(`${baseTestUrl}/neo/fastest`, function(err, res, body) {
+
+            const serverResponse = JSON.parse(body);
             
-            expect(serverResponse.potentiallyHazardousNEOs.date).toEqual(expectedResponse.date);
-            expect(serverResponse.potentiallyHazardousNEOs.reference).toEqual(expectedResponse.reference);
-            expect(serverResponse.potentiallyHazardousNEOs.name).toEqual(expectedResponse.name);
-            expect(serverResponse.potentiallyHazardousNEOs.speed).toEqual(expectedResponse.speed);
-            expect(serverResponse.potentiallyHazardousNEOs.isHazardous).toEqual(expectedResponse.isHazardous);
+            expect(serverResponse.fastestNEO.date).toEqual(expectedResponse.date);
+            expect(serverResponse.fastestNEO.reference).toEqual(expectedResponse.reference);
+            expect(serverResponse.fastestNEO.name).toEqual(expectedResponse.name);
+            expect(serverResponse.fastestNEO.speed).toEqual(expectedResponse.speed);
+            expect(serverResponse.fastestNEO.isHazardous).toEqual(expectedResponse.isHazardous);
             done();
         });
     });
