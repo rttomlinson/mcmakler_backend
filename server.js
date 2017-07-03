@@ -1,29 +1,12 @@
-const express = require("express");
-const app = express();
-
 //set environmental variables
 require('dotenv');
 
+const express = require("express");
+const app = express();
+
 const NEO = require('./models').NEO;
 
-app.get('/neo/hazardous', function(req, res) {
-    NEO.findHazardous()
-        .then((neos) => {
-            res.json({
-                "potentiallyHazardousNEOs": neos
-            });
-        });
-});
-
-app.get('/neo/fastest', function(req, res) {
-    NEO.findFastest()
-        .then((neos) => {
-            res.json({
-                "fastestNEO": neos[0]
-            });
-
-        });
-});
+app.use('/neo', require("./routes/neoRouter"));
 
 app.get('/', function(req, res) {
     res.json({

@@ -23,15 +23,15 @@ const NEOSchema = new Schema({
 
 NEOSchema.statics.findHazardous = function findHazardous() {
     return this.find().where({
-            "isHazardous": true
-        });
+        "isHazardous": true
+    });
 };
 
 NEOSchema.statics.findFastest = function findFastest() {
     return this.find().limit(1).
     sort({
-            speed: -1
-        });
+        speed: -1
+    });
 };
 
 
