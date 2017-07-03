@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-
 // Set test environment
 process.env.NODE_ENV = 'test';
+
+const mongoose = require('mongoose');
 
 //connect to the databse if not already connected
 beforeAll((done) => {

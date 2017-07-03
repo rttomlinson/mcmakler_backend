@@ -17,7 +17,7 @@ module.exports = () => {
   // ----------------------------------------
   // Finish
   // ----------------------------------------
-  console.log('Saving...');
+  console.log('Saving seeds...');
   var promises = [];
   [
     neos,
