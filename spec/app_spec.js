@@ -1,6 +1,9 @@
 const app = require("../server");
 const request = require('request');
 
+//These tests require connection to a mongodb. Check spec_helper files for more information
+
+
 describe("server api", function(){
     const baseTestUrl = 'http://localhost:8082';
     let server;
