@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 require('isomorphic-fetch');
 const nasaAPIHelper = require('../helpers/nasaAPIHelper.js');
-
+const moment = require('moment');
 
 module.exports = (mongoModels) => {
     const NEO = mongoModels.NEO;
@@ -26,8 +26,11 @@ module.exports = (mongoModels) => {
             });
     });
 
-    router.get('/', function(req, res) {
-        let nasaUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=2017-06-01&end_date=2017-06-03&detailed=true&api_key=${process.env.NASA_API_KEY}`
+    router.get('/', function(req, res, next) {
+        let days = req.query.days;
+        let endDate = moment().format('YYYY-MM-DD');
+        let startDate = moment().subtract(days, 'days').format('YYYY-MM-DD');;
+        let nasaUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=true&api_key=${process.env.NASA_API_KEY}`
         fetch(nasaUrl)
             .then((response) => {
                 if (!response.ok) {
@@ -40,33 +43,19 @@ module.exports = (mongoModels) => {
             })
             .then((neos) => {
                 //Need to add each to the database
-                return nasaAPIHelper.cleanNEOs(neos);
-                neos = neos.map((neo) => {
-    return new NEO(neo);
-  });
+                neos = nasaAPIHelper.cleanNEOs(neos.near_earth_objects);
+                return neos.map((neo) => {
+                    const query = {
+                        reference: neo.reference
+                    }
+                    return NEO.update(query, neo, {upsert: true});
+                });
 
-
-  // ----------------------------------------
-  // Finish
-  // ----------------------------------------
-  console.log('Saving seeds...');
-  var promises = [];
-  [
-    neos,
-    // Other models...
-  ].forEach((collection) => {
-    collection.forEach((model) => {
-      promises.push(model.save());
-    });
-  });
-  return Promise.all(promises);
             })
-            .then(() => {
-                res.send("We got it!");
+            .then((addedNEOs) => {
+                res.json({"success": "added new dates"});
             })
-            .catch((error) => {
-                res.send(error);
-            });
+            .catch(next);
     });
 
     return router;

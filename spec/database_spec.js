@@ -173,5 +173,47 @@ describe("Near Earth Object Schema", function() {
             
             expect(nasaAPIHelper.cleanNEOs(near_earth_objects)).toEqual(finalValues);
         })
+        xit("updates neos in the database, no duplicates", function() {
+
+            let startingValues = [{
+                date: Date.parse("2017-06-02"),
+                reference: "3154511",
+                name: "(2003 KQ18)",
+                speed: 43630.9669256846,
+                isHazardous: false
+            }];
+            
+            let fetchedData = [{
+                date: Date.parse("2017-06-02"),
+                reference: "3154511",
+                name: "(2003 KQ18)",
+                speed: 43630.9669256846,
+                isHazardous: false
+            }, {
+                date: Date.parse("2017-06-03"),
+                reference: "3774621",
+                name: "(2017 JL3)",
+                speed: 35850.8589117799,
+                isHazardous: false
+            }];
+            
+            let finalValues = [{
+                date: Date.parse("2017-06-02"),
+                reference: "3154511",
+                name: "(2003 KQ18)",
+                speed: 43630.9669256846,
+                isHazardous: false
+            }, {
+                date: Date.parse("2017-06-03"),
+                reference: "3774621",
+                name: "(2017 JL3)",
+                speed: 35850.8589117799,
+                isHazardous: false
+            }];
+            
+            
+            
+            expect(nasaAPIHelper.addNewNeos(startingValues, fetchedData)).toEqual(finalValues);
+        })
     })
 })
