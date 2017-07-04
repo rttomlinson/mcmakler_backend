@@ -40,11 +40,27 @@ NEOSchema.statics.findHazardous = function findHazardous() {
 NEOSchema.statics.findFastest = function findFastest() {
     return this.find().limit(1).
     sort({
-        speed: -1
-    })
-    .then((neos) => {
-        //return just the first in the array
-        return neos[0];
+            speed: -1
+        })
+        .then((neos) => {
+            //return just the first in the array
+            return neos[0];
+        });
+};
+
+/**
+ * Updates or inserts new NEOs
+ * 
+ **/
+
+NEOSchema.statics.updateOrInsert = function updateOrInsert(neos) {
+    return neos.map((neo) => {
+        const query = {
+            reference: neo.reference
+        };
+        return this.update(query, neo, {
+            upsert: true
+        });
     });
 };
 

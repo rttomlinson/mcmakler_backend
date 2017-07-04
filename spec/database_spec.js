@@ -210,9 +210,6 @@ describe("Near Earth Object Schema", function() {
                 speed: 35850.8589117799,
                 isHazardous: false
             }];
-            
-            
-            
             expect(nasaAPIHelper.addNewNeos(startingValues, fetchedData)).toEqual(finalValues);
         })
     })
