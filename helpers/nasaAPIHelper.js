@@ -103,7 +103,7 @@ nasaAPIHelper.cleanNEOs = function(near_earth_objects) {
   return neos;
 };
 
-nasaAPIHelper.fetchNEOs = function(url, fn = fetch) {
+nasaAPIHelper.fetchData = function(url, fn = fetch) {
   return fn(url)
     .then((response) => {
       if (!response.ok) {
@@ -120,7 +120,7 @@ nasaAPIHelper.fetchNEOs = function(url, fn = fetch) {
 };
 
 
-nasaAPIHelper.fetchAndUpdateNEOs = function(startDate, endDate, updateOrInsertFn = NEO.updateOrInsert.bind(NEO), fetchData = nasaAPIHelper.fetchNEOs) {
+nasaAPIHelper.fetchNEOs = function(startDate, endDate, fetchData = nasaAPIHelper.fetchData) {
   if (!(endDate && startDate)) {
     throw new Error("Dates missing");
   }
@@ -137,9 +137,7 @@ nasaAPIHelper.fetchAndUpdateNEOs = function(startDate, endDate, updateOrInsertFn
   let nasaUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=true&api_key=${process.env.NASA_API_KEY}`;
   return fetchData(nasaUrl)
     .then((neos) => {
-      //Need to add each to the database
-      neos = nasaAPIHelper.cleanNEOs(neos.near_earth_objects);
-      return updateOrInsertFn(neos);
+      return neos = nasaAPIHelper.cleanNEOs(neos.near_earth_objects);
     }).
     catch((error) => {
       console.log("error", error);

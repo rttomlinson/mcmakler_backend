@@ -27,11 +27,15 @@ module.exports = (mongoModels) => {
     router.get('/', function(req, res, next) {
         let endDate = req.query.endDate;
         let startDate = req.query.startDate;
-        nasaAPIHelper.fetchAndUpdateNEOs(startDate, endDate)
+        nasaAPIHelper.fetchNEOs(startDate, endDate)
+            .then((neos) => {
+                      return NEO.updateOrInsert(neos);
+            })
             .then(() => {
                 res.json({
                     "success": "added new dates"
                 });
+
             })
             .catch(next);
     });
