@@ -74,7 +74,6 @@
 const moment = require('moment');
 require('isomorphic-fetch');
 const nasaAPIHelper = {};
-const NEO = require('../models').NEO;
 
 nasaAPIHelper.cleanNEOData = function(date, asteroidData) {
   let NEOData = {};

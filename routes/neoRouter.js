@@ -29,13 +29,12 @@ module.exports = (mongoModels) => {
         let startDate = req.query.startDate;
         nasaAPIHelper.fetchNEOs(startDate, endDate)
             .then((neos) => {
-                      return NEO.updateOrInsert(neos);
+                return NEO.updateOrInsert(neos);
             })
             .then(() => {
                 res.json({
                     "success": "added new dates"
                 });
-
             })
             .catch(next);
     });

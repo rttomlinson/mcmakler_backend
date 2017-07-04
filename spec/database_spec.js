@@ -191,7 +191,6 @@ describe("NASA NEO Data Helpers", function() {
         //mock out the fetch call used
         NEO.updateOrInsert(fetchValues)
             .then(() => {
-                console.log("returned from helper");
                 return NEO.find()
             })
             .then((neos) => {
@@ -200,10 +199,6 @@ describe("NASA NEO Data Helpers", function() {
             })
     });
 })
-
-
-
-
 
 
 const near_earth_objects_two = [{
