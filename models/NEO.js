@@ -54,14 +54,14 @@ NEOSchema.statics.findFastest = function findFastest() {
  **/
 
 NEOSchema.statics.updateOrInsert = function updateOrInsert(neos) {
-    return neos.map((neo) => {
+    return Promise.all(neos.map((neo) => {
         const query = {
             reference: neo.reference
         };
         return this.update(query, neo, {
             upsert: true
         });
-    });
+    }));
 };
 
 

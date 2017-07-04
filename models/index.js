@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bluebird = require('bluebird');
-
 //set bluebird as promise library for mongoose
 mongoose.Promise = bluebird;
 

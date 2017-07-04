@@ -71,37 +71,79 @@
         }
       }
 */
+const moment = require('moment');
+require('isomorphic-fetch');
 const nasaAPIHelper = {};
+const NEO = require('../models').NEO;
 
 nasaAPIHelper.cleanNEOData = function(date, asteroidData) {
-    let NEOData = {};
-    //create date obj and add to object
-    NEOData.date = Date.parse(date);
-    //neo_reference_id as reference
-    NEOData.reference = asteroidData.neo_reference_id;
-    NEOData.name = asteroidData.name;
-    NEOData.speed = +asteroidData.close_approach_data[0].relative_velocity.kilometers_per_hour;
-    NEOData.isHazardous = asteroidData.is_potentially_hazardous_asteroid;
-    return NEOData;
+  let NEOData = {};
+  //create date obj and add to object
+  NEOData.date = Date.parse(date);
+  //neo_reference_id as reference
+  NEOData.reference = asteroidData.neo_reference_id;
+  NEOData.name = asteroidData.name;
+  NEOData.speed = +asteroidData.close_approach_data[0].relative_velocity.kilometers_per_hour;
+  NEOData.isHazardous = asteroidData.is_potentially_hazardous_asteroid;
+  return NEOData;
 };
 
 nasaAPIHelper.cleanNEOs = function(near_earth_objects) {
-    //get dates for neos
-    const dates = Object.keys(near_earth_objects);
-    const neos = [];
-    dates.forEach((date) => {
-        //array of corresponding neos for that date
-        const neosForDay = near_earth_objects[date];
-        //loop through each neo passing to cleanNEOData helper and add to neos
-        neosForDay.forEach((neo) => {
-            neos.push(nasaAPIHelper.cleanNEOData(date, neo));
-        });
+  //get dates for neos
+  const dates = Object.keys(near_earth_objects);
+  const neos = [];
+  dates.forEach((date) => {
+    //array of corresponding neos for that date
+    const neosForDay = near_earth_objects[date];
+    //loop through each neo passing to cleanNEOData helper and add to neos
+    neosForDay.forEach((neo) => {
+      neos.push(nasaAPIHelper.cleanNEOData(date, neo));
     });
-    return neos;
+  });
+  return neos;
+};
+
+nasaAPIHelper.fetchNEOs = function(url, fn = fetch) {
+  return fn(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw response;
+      }
+      return response;
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 
+nasaAPIHelper.fetchAndUpdateNEOs = function(startDate, endDate, updateOrInsertFn = NEO.updateOrInsert.bind(NEO), fetchData = nasaAPIHelper.fetchNEOs) {
+  if (!(endDate && startDate)) {
+    throw new Error("Dates missing");
+  }
 
+  endDate = moment(endDate);
+  startDate = moment(startDate);
 
+  if (!(endDate.isValid() && startDate.isValid())) {
+    throw new Error("Invalid Dates");
+  }
+
+  endDate = endDate.format('YYYY-MM-DD');
+  startDate = startDate.format('YYYY-MM-DD');
+  let nasaUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=true&api_key=${process.env.NASA_API_KEY}`;
+  return fetchData(nasaUrl)
+    .then((neos) => {
+      //Need to add each to the database
+      neos = nasaAPIHelper.cleanNEOs(neos.near_earth_objects);
+      return updateOrInsertFn(neos);
+    }).
+    catch((error) => {
+      console.log("error", error);
+    });
+};
 
 module.exports = nasaAPIHelper;

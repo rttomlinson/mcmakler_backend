@@ -2,7 +2,7 @@ const app = require("../server");
 const request = require('request');
 
 //These tests require connection to a mongodb. Check spec_helper files for more information
-
+const NEO = require('../models').NEO;
 
 describe("server api", function() {
     const baseTestUrl = 'http://localhost:8082';
@@ -15,15 +15,15 @@ describe("server api", function() {
             done();
         });
     });
-    
+
     //reseed the database before each new test
     beforeEach(function(done) {
         require('../seeds/seeds')()
-        .then(() => {
-            done();
-        });
+            .then(() => {
+                done();
+            });
     });
-    
+
 
     afterAll(function(done) {
         console.log("\nClosing server");
@@ -50,7 +50,7 @@ describe("server api", function() {
             reference: '2418094',
             name: '418094 (2007 WV4)',
             speed: 83656.2560790809,
-            isHazardous: true 
+            isHazardous: true
         }];
         request.get(`${baseTestUrl}/neo/hazardous`, function(err, res, body) {
 
@@ -72,12 +72,12 @@ describe("server api", function() {
             reference: '2418094',
             name: '418094 (2007 WV4)',
             speed: 83656.2560790809,
-            isHazardous: true 
+            isHazardous: true
         };
         request.get(`${baseTestUrl}/neo/fastest`, function(err, res, body) {
 
             const serverResponse = JSON.parse(body);
-            
+
             expect(serverResponse.fastestNEO.date).toEqual(expectedResponse.date);
             expect(serverResponse.fastestNEO.reference).toEqual(expectedResponse.reference);
             expect(serverResponse.fastestNEO.name).toEqual(expectedResponse.name);
@@ -86,10 +86,25 @@ describe("server api", function() {
             done();
         });
     });
-    it("returns 200 on successful NASA API fetch at /neo?days=3 endpoint", function(done) {
-        request.get(`${baseTestUrl}/neo?days=3`, function(err, res, body) {
+    it("returns 200 on successful NASA API fetch at /neo with valid dates endpoint", function(done) {
+        request.get(`${baseTestUrl}/neo?startDate=2017-06-01&endDate=2017-06-03`, function(err, res, body) {
             expect(res.statusCode).toEqual(200);
             done();
         });
     });
-})
+    it("returns 30 NEOS in DB on successful NASA API fetch update at /neo 06-01 -> 06-04 valid dates endpoint", function(done) {
+        let p = new Promise((resolve) => {
+            request.get(`${baseTestUrl}/neo?startDate=2017-06-01&endDate=2017-06-04`, function(err, res, body) {
+                expect(res.statusCode).toEqual(200);
+                resolve();
+            });
+        });
+        p.then(() => {
+            NEO.find()
+                .then((neos) => {
+                    expect(neos.length).toEqual(30);
+                    done();
+                })
+        });
+    })
+});
