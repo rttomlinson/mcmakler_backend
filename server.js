@@ -1,10 +1,10 @@
 //set environmental variables
-require('dotenv');
+require('dotenv').config();
 
 const express = require("express");
 const app = express();
 const wagner = require("wagner-core");
-
+console.log("process.env.NASA", process.env.NASA_API_KEY);
 //add models to wagner
 wagner.factory('mongoModels', function() {
     return require('./models');

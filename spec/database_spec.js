@@ -136,17 +136,6 @@ const near_earth_objects = {
 }
 
 describe("Near Earth Object Schema", function() {
-    it("returns a single NEO", function() {
-        NEO.create({
-            date: null,
-            referece: null,
-            name: null,
-            speed: null,
-            isHazardous: null
-        });
-        expect(true).toEqual(true);
-    });
-
     describe("NASA NEO Data Helper", function() {
         it("returns data in a cleaned form for the database", function() {
             /* Date should be a string in YYYY-MM-DD form */
@@ -183,9 +172,6 @@ describe("Near Earth Object Schema", function() {
             }];
             
             expect(nasaAPIHelper.cleanNEOs(near_earth_objects)).toEqual(finalValues);
-
         })
-
     })
-
 })

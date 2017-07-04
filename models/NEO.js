@@ -21,11 +21,21 @@ const NEOSchema = new Schema({
     timestamps: true
 });
 
+/**
+ * Returns the hazardous NEOs in the database
+ * 
+ **/
+
 NEOSchema.statics.findHazardous = function findHazardous() {
     return this.find().where({
         "isHazardous": true
     });
 };
+
+/**
+ * Returns the fastest NEO in the database
+ * 
+ **/
 
 NEOSchema.statics.findFastest = function findFastest() {
     return this.find().limit(1).

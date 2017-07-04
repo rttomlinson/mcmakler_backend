@@ -86,4 +86,10 @@ describe("server api", function() {
             done();
         });
     });
+    it("returns 200 on successful NASA API fetch at /neo?days=3 endpoint", function(done) {
+        request.get(`${baseTestUrl}/neo?days=3`, function(err, res, body) {
+            expect(res.statusCode).toEqual(200);
+            done();
+        });
+    });
 })
