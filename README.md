@@ -33,7 +33,7 @@ Alternatively, you are able to navigate to /neo to request NEOs for a specified 
 
 ## Endpoints
 * /neo?startDate=[String]&endDate=[String]
-    *(in the form of YYYY-MM-DD) both required
+    * (in the form of YYYY-MM-DD) both required
 * /neo/fastest
 * /neo/hazardous
 
