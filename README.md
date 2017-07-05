@@ -17,7 +17,7 @@ If you do not have mongoDB, please visit their installation page at (https://doc
 
 ### Install dependencies
 
-Run `npm i` in the root directory in install all dependencies
+Run `npm i` in the root directory to install all dependencies
 
 ### Starting the server
 
@@ -40,14 +40,14 @@ Test are run on port 8082.
 To fetch the last three days (including the current day), run `npm run fetch`.  
 This can be run without the server up, but still requires mongoDB to be running.
 
-Alternatively, you are able to navigate to /neo to request NEOs for a specified date. Refer to the endpoints section for more information
+Alternatively, you are able to navigate to /neo to request NEOs for specified dates. Refer to the endpoints section for more information
 
 
 ## Endpoints
 * /neo?startDate=[String]&endDate=[String]
     * This will update the database with new NEOs between the specified dates
     * difference in dates cannot be greater than 7 days
-    * (in the form of YYYY-MM-DD)
+    * dates in the form of YYYY-MM-DD
     * both required
 * /neo/fastest
     * returns an object with key `fastestNEO` for the fastest NEO object
@@ -56,7 +56,7 @@ Alternatively, you are able to navigate to /neo to request NEOs for a specified 
 
 ### Seeding the database
 
-If you'd like to seed the database with some older data for development, run `npm run mg:seed`
+If you'd like to seed the database with some older data for development, run `npm run mg:seed`.  
 This is the same data that is used for the tests.
 
 ### Environmental variables
@@ -68,3 +68,4 @@ You may set environmental variables in here. One per line.
 
 You may also setup an alternate port for the test server on the TEST_PORT variable
 
+Author: Renzo Tomlinson
