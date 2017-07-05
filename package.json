@@ -12,7 +12,7 @@
     "fetch" : "node ./scripts/lastThreeDays.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Renzo Tomlinson",
   "license": "ISC",
   "devDependencies": {
     "jasmine": "^2.6.0",
