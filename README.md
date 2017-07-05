@@ -37,7 +37,7 @@ To run the tests type `npm run test` to run the tests once and `npm run test:wat
 
 ### Fetching the last three days
 
-To fetch the last three days (including the current day), run `npm run fetch`;
+To fetch the last three days (including the current day), run `npm run fetch`.  
 This can be run without the server up, but still requires mongoDB to be running.
 
 Alternatively, you are able to navigate to /neo to request NEOs for a specified date. Refer to the endpoints section for more information
