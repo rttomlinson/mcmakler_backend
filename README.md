@@ -25,11 +25,17 @@ Since this is only the backend, you will need to manually go to each endpoint.
 Test are run on port 8082.
 To run the tests type `npm run test` to run the tests once and `npm run test:watch` to run the tests whenever changes are made
 
+To fetch the last three days (including the current day), run `npm run fetch`;
+This can be run without the server up, but still requires mongoDB to be running.
+
+Alternatively, you are able to navigate to /neo to request NEOs for a specified date. Refer to the endpoints section for more information
 
 
-/endpoints
-* /neo?startDate=[String]&endDate=[String] (in the form of YYYY-MM-DD) both required
-* 
+## Endpoints
+* /neo?startDate=[String]&endDate=[String]
+..*(in the form of YYYY-MM-DD) both required
+* /neo/fastest
+* /neo/hazardous
 
 If you'd like to seed the database with some older data for development, run `npm run mg:seed`
 This is the same data that is used for the tests.

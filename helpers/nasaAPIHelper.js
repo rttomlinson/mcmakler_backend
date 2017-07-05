@@ -126,6 +126,13 @@ nasaAPIHelper.fetchNEOs = function(startDate, endDate, fetchData = nasaAPIHelper
 
   endDate = moment(endDate);
   startDate = moment(startDate);
+  
+  //check if greater than 7 days between start and end
+  let checkDate = endDate.clone().subtract(7, 'days');
+  if (checkDate.isAfter(startDate)) {
+    //if checkDate is still after startDate after subtracting 7 days it must be greater than 7 days diff
+    throw new Error("Difference between days cannot be greater than 7");
+  }
 
   if (!(endDate.isValid() && startDate.isValid())) {
     throw new Error("Invalid Dates");

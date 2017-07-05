@@ -29,6 +29,7 @@ module.exports = (mongoModels) => {
         let startDate = req.query.startDate;
         nasaAPIHelper.fetchNEOs(startDate, endDate)
             .then((neos) => {
+                console.log("neos from fetch", neos);
                 return NEO.updateOrInsert(neos);
             })
             .then((updatedNEOsResponse) => {
