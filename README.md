@@ -1,14 +1,17 @@
 Technical Stack
 * NodeJS (Express)
 * MongoDB
-* Surge
 
 NodeJS was selected for familiarity and availability of Express
 MongoDB was selected as per assignment
-Surge was selected for ease of deployment
 
+mongo 27017 default port
 
-To start the development server run npm run start-dev in the mcmakler directory
+/endpoints
+* /neo?startDate=[String]&endDate=[String] (in the form of YYYY-MM-DD) both required
+* 
+
+To start the development server run npm run start:dev in the mcmakler directory
 To run tests run npm test
 To seed the database in developent run npm run mg:seed
 

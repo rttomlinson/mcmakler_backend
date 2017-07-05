@@ -5,12 +5,13 @@ const request = require('request');
 const NEO = require('../models').NEO;
 
 describe("server api", function() {
-    const baseTestUrl = 'http://localhost:8082';
+    let testPort = process.env.TEST_PORT || 8082;
+    const baseTestUrl = `http://localhost:${testPort}`;
     let server;
 
     beforeAll(function(done) {
         console.log("starting server for tests");
-        server = app.listen(process.env.TEST_PORT || 8082, function() {
+        server = app.listen(testPort, function() {
             console.log("server connected on 8082 for tests");
             done();
         });
