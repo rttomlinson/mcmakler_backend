@@ -5,12 +5,12 @@
 * Linux - Ubuntu 14.04.5 LTS
 * Cloud9 - IDE
 
-NodeJS was selected for familiarity and availability of Express
+NodeJS was selected for familiarity and availability of Express  
 MongoDB was selected as per assignment
 
 ### Setting up the database
 
-You will require mongoDB to use this setup.
+You will require mongoDB to use this setup.  
 If you do not have mongoDB, please visit their installation page at (https://docs.mongodb.com/manual/installation/)
 
 *Note - MongoDB will default to listen on port 27017
@@ -21,7 +21,7 @@ Run `npm i` in the root directory in install all dependencies
 
 ### Starting the server
 
-To start the local development server use the `npm run start:dev`, this will utilize nodemon to refresh the server when changes are made
+To start the local development server use the `npm run start:dev`. This will use nodemon to refresh the server when changes are made.  
 If you'd like you only start the server once, use `npm start`.
 
 The server will default to port 8080. Navigate to localhost:8080.
@@ -30,9 +30,9 @@ Since this is only the backend, you will need to manually go to each endpoint.
 
 ### Running tests
 
-All tests can be found in the spec directory.
-The testing framework using is Jasmine.
-Test are run on port 8082.
+All tests can be found in the spec directory.  
+The testing framework using is Jasmine.  
+Test are run on port 8082.  
 To run the tests type `npm run test` to run the tests once and `npm run test:watch` to run the tests whenever changes are made
 
 ### Fetching the last three days
