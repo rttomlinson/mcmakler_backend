@@ -31,9 +31,10 @@ module.exports = (mongoModels) => {
             .then((neos) => {
                 return NEO.updateOrInsert(neos);
             })
-            .then(() => {
+            .then((updatedNEOsResponse) => {
+                console.log("updated neos");
                 res.json({
-                    "success": "added new dates"
+                    "success": `fetched ${updatedNEOsResponse.length} NEOs`
                 });
             })
             .catch(next);

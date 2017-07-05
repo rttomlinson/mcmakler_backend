@@ -8,7 +8,8 @@
     "start-dev": "./node_modules/.bin/nodemon server.js",
     "jasmine": "./node_modules/jasmine/bin/jasmine.js",
     "test:watch": "./node_modules/.bin/nodemon --exec npm run jasmine",
-    "mg:seed": "node ./seeds"
+    "mg:seed": "node ./seeds",
+    "fetch" : "node ./scripts/lastThreeDays.js"
   },
   "keywords": [],
   "author": "",

@@ -5,6 +5,15 @@ const express = require("express");
 const app = express();
 const wagner = require("wagner-core");
 
+//connect to mongodb with mongoose
+app.use((req, res, next) => {
+    require('./mongoConnect')()
+    .then(() => {
+        next();
+    });
+});
+
+
 //add models to wagner
 wagner.factory('mongoModels', function() {
     return require('./models');

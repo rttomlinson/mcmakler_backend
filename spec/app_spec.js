@@ -10,7 +10,7 @@ describe("server api", function() {
 
     beforeAll(function(done) {
         console.log("starting server for tests");
-        server = app.listen(8082, function() {
+        server = app.listen(process.env.TEST_PORT || 8082, function() {
             console.log("server connected on 8082 for tests");
             done();
         });
